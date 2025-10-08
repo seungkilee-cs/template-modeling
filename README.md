@@ -1,79 +1,112 @@
-# Financial Modeling
+# Modeling Template
 
-Hands-on exploration of quantitative finance models through two complementary tracks:
+Kickstart interactive modeling projects covering economics, finance, statistics, or any quantitative domain. This template pairs Python prototyping with a TypeScript/React visualizer so you can validate models quickly and present them with polished dashboards.
 
-- Python prototypes under `python-model/` for rapid experimentation and mathematical validation
-- A TypeScript visualizer in `ts-visualizer/` that turns validated models into interactive dashboards
+## Features
 
-The goal is to understand theory, document assumptions, and present results with polished visuals that are easy to share.
+- **Dual-track workflow**
+  Python prototypes for rapid validation and a reusable TypeScript visualizer for interactive dashboards.
+
+- **Modular domains**
+  Separate domain packages (e.g., `finance`, `economics`) plug into the shared UI shell and Python tooling.
+
+- **Extensible model registry**
+  Add sliders, metrics, and charts by implementing a single `ModelDefinition` contract.
+
+- **Deployment-ready pipeline**
+  GitHub Actions workflow (guarded by repository slug) configured for Pages hosting once you enable it.
+
+## Quick Start
+
+- **Clone template**
+  Use "Use this template" on GitHub or run `npx degit your-user/modeling-template my-project`.
+
+- **Install visualizer dependencies**
+
+  ```
+  cd my-project/template-core/ts-visualizer
+  npm install
+  npm run dev
+  ```
+
+- **Run Python examples**
+  ```
+  cd my-project/template-core/python-core
+  python -m venv .venv
+  source .venv/bin/activate
+  pip install -r requirements.txt
+  python src/models/linear_regression.py
+  ```
 
 ## Repository Layout
 
-- `python-model/` contains per-model Python implementations and write-ups
-- `ts-visualizer/` hosts the React + TypeScript application and related documentation
-- `docs/` (if present within directories) provides model-specific notes, derivations, or usage tips
+- **`template-core/`**
 
-## Getting Started
+  - **`ts-visualizer/`**: React/Vite app, shared components, base model registry, docs.
+  - **`python-core/`**: Virtualenv setup, lightweight model utilities, sample scripts.
 
-### Python prototypes
+- **`domains/`**
+  Domain-specific packages. `finance/` contains example models; add your own under `economics/`, `statistics/`, etc.
 
-1. Install Python 3.11+ and create a virtual environment
-2. Navigate to a model directory under `python-model/`
-3. Follow the local README for dependencies (most rely on the standard library, some use NumPy or SciPy)
-4. Run the scripts or notebooks to reproduce calculations and sample scenarios
+- **`examples/`**
+  Optional bundles combining `template-core/` with one or more domains for demos.
 
-### TypeScript visualizer
+- **`.github/workflows/deploy.yml`**
+  GitHub Pages workflow disabled by default via `TARGET_REPO` guard.
 
-1. Navigate to `ts-visualizer/`
-2. Install dependencies with `npm install`
-3. Start the dev server via `npm run dev`
-4. For production builds use `npm run build` and refer to `ts-visualizer/docs/start-new-visualizer.md` for GitHub Pages deployment details
+## Customization Checklist
 
-## Documentation
+- **Update metadata**
 
-- `ts-visualizer/README.md` describes the app shell, feature set, and scripts
-- `ts-visualizer/docs/adding-model.md` outlines how to register additional models
-- `ts-visualizer/docs/models/{MODEL_NAME}.md` captures background, validation, and UI behavior for the my model implementation
+  - Rename project in `package.json`, `tsconfig.json`, and docs.
+  - Adjust `VITE_BASE_PATH` in `ts-visualizer/vite.config.ts` or via env var.
 
-## Model Roadmap
+- **Configure deployment**
 
-| ID | Model | Python prototype | Visualizer implementation | Notes |
-| -- | ----- | ---------------- | ------------------------- | ----- |
-| 00 | [Black-Scholes Model](./python-model/Black-Scholes-Model/README.md) | [Complete](./python-model/Black-Scholes-Model/black_scholes_model.py) | [Complete](./ts-visualizer/src/models/BlackScholes.tsx) | European option pricing with closed-form solution |
-| 01 | [Dividend Discount Model (DDM)](./python-model/DDM-Model/README.md) | Planned | Planned | Foundational equity valuation using dividend growth |
-| 02 | [Three-Statement Model](./python-model/Three-Statement-Model/README.md) | Planned | Planned | Links Income Statement, Balance Sheet, and Cash Flow dynamically |
-| 03 | [Discounted Cash Flow (DCF)](./python-model/DCF-Model/README.md) | Planned | Planned | Intrinsic valuation via projected free cash flow discounting |
-| 04 | [Comparable Company Analysis](./python-model/Comps-Model/README.md) | Planned | Planned | Relative valuation using market multiples |
-| 05 | [Capital Asset Pricing Model (CAPM)](./python-model/CAPM-Model/README.md) | Planned | Planned | Single-factor model linking beta to expected returns |
-| 06 | [Markowitz Portfolio Optimization](./python-model/Markowitz-Model/README.md) | Planned | Planned | Mean-variance allocation to find efficient frontier |
-| 07 | [Binomial Option Pricing](./python-model/Binomial-Model/README.md) | Planned | Planned | Discrete tree-based method for American options |
-| 08 | [Monte Carlo Option Pricing](./python-model/Monte-Carlo-Model/README.md) | Planned | Planned | Simulation-based pricing for path-dependent derivatives |
-| 09 | [Value at Risk (VaR)](./python-model/VaR-Model/README.md) | Planned | Planned | Statistical risk measurement via distribution tails |
-| 10 | [GARCH Volatility Forecasting](./python-model/GARCH-Model/README.md) | Planned | Planned | Time-series model for volatility clustering |
-| 11 | [Fama-French Three-Factor Model](./python-model/Fama-French-Model/README.md) | Planned | Planned | Extends CAPM with size and value risk factors |
-| 12 | [Black-Litterman Asset Allocation](./python-model/Black-Litterman-Model/README.md) | Planned | Planned | Bayesian blend of market equilibrium and investor views |
-| 13 | [Leveraged Buyout (LBO) Model](./python-model/LBO-Model/README.md) | Planned | Planned | Private equity model analyzing debt-financed acquisitions |
-| 14 | [Merger & Acquisition (M&A) Model](./python-model/MA-Model/README.md) | Planned | Planned | Pro-forma analysis of combined entity financials |
-| 15 | [Interest Rate Models (Vasicek/CIR)](./python-model/Interest-Rate-Models/README.md) | Planned | Planned | Stochastic models for interest rate evolution |
-| 16 | [Heston Stochastic Volatility Model](./python-model/Heston-Model/README.md) | Planned | Planned | Advanced option pricing with random volatility dynamics |
-| 17 | [Credit Default Swap (CDS) Pricing](./python-model/CDS-Model/README.md) | Planned | Planned | Derivative pricing for credit risk protection |
+  - Edit `.github/workflows/deploy.yml` `TARGET_REPO`.
+  - Set `VITE_BASE_PATH` to match your Pages slug before enabling the workflow.
 
+- **Add a new domain**
 
-## Workflow Overview
+  - Duplicate `domains/finance/` as a starting point.
+  - Register new models in both Python and TypeScript.
+  - Document domain specifics in `template-docs/domains/`.
 
-1. Prototype new models in Python to internalize theory and verify calculations
-2. Capture findings, assumptions, and validation notes in per-model documentation
-3. Port the model into `ts-visualizer/` using the shared `FinancialModelDefinition` contract
-4. Register the model so it appears in the UI and document the visualization steps
-5. Optionally extract reusable pieces into `portable/` for other analytics dashboards
+- **Extend UI controls**
+  - Implement additional control types in `ts-visualizer/src/components/`.
+  - Update `ModelDefinition` to expose new metrics or visualizations.
 
-## Future Extensions
+## Adding Models
 
-- Expand the model set across asset classes and risk methodologies
-- Integrate historical market data pulls for calibration and backtesting
-- Add automated tests comparing Python outputs with the visualizer implementation
-- Explore deployment of the visualizer toolkit to economics or statistics domains using the `portable/` package
+1. **Prototype in Python** (`template-core/python-core/src/models/`).
+
+   - Validate formulas, create sample outputs, add documentation in `template-docs/`.
+
+2. **Translate to TypeScript** (`template-core/ts-visualizer/src/models/`).
+
+   - Export a `ModelDefinition`.
+   - Register it in `src/models/registry.ts`.
+
+3. **Document** (`template-docs/models/<model>.md`).
+   - Explain assumptions, inputs, outputs, and UI behavior.
+
+## Deployment
+
+- **Enable GitHub Pages** after customizing `deploy.yml`.
+- Build locally:
+  ```
+  cd template-core/ts-visualizer
+  npm run build
+  npm run preview
+  ```
+- GitHub Actions will publish to Pages once guards are updated and the workflow is enabled.
+
+## Contributing
+
+- Use `scripts/export-template.sh` and `scripts/sync-template.sh` (from the original source repo) to regenerate this template as you evolve your base project.
+- Follow conventional commits for clarity.
+- Run linting/tests before submitting pull requests.
 
 ## License
 
-This repository is licensed under MIT. Use, modify, and share freely.
+This template is released under the MIT License. You are free to use, modify, and distribute it in your own projects.
